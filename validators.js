@@ -1,0 +1,1 @@
+export function validateCPF(cpf){ if(!cpf) return false; const clean = cpf.replace(/\D/g,''); if(clean.length!==11) return false; if(/^(\d)\1+$/.test(clean)) return false; return true; } export function validatePhone(phone){ if(!phone) return false; const clean = phone.replace(/\D/g,''); return clean.length===10 || clean.length===11; }

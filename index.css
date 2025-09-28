@@ -1,0 +1,1 @@
+@tailwind base;@tailwind components;@tailwind utilities;html,body,#root{height:100%}.card-hover:hover{transform:translateY(-6px);transition:transform 200ms ease;}

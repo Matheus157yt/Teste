@@ -1,0 +1,5 @@
+const express = require('express'); const router = express.Router(); const auth = require('../middleware/auth'); const Course = require('../models/Course'); const User = require('../models/User');
+router.get('/', async (req,res)=>{ try{ const courses = await Course.find(); res.json(courses);}catch(e){res.status(500).json({message:'Erro'});} });
+router.get('/:id', auth, async (req,res)=>{ try{ const course = await Course.findById(req.params.id); if(!course) return res.status(404).json({message:'Curso não encontrado'}); res.json(course);}catch(e){res.status(500).json({message:'Erro'});} });
+router.post('/:id/progress', auth, async (req,res)=>{ try{ const {moduleIndex} = req.body; const user = req.user; const courseId = req.params.id; const existing = user.progress.find(p=>p.courseId.toString()===courseId); if(existing){ existing.moduleIndex = moduleIndex; existing.updatedAt = Date.now(); } else user.progress.push({courseId,moduleIndex}); await user.save(); res.json({message:'Progresso salvo'});}catch(e){res.status(500).json({message:'Erro'});} });
+module.exports = router;
